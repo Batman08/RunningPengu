@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private const float LANE_DISTANCE = 3f;
+    private const float LANE_DISTANCE = 2.25f;
     private const float TURN_SPEED = 0.05f;
 
     //Movement
@@ -20,17 +20,30 @@ public class PlayerController : MonoBehaviour
     private Vector3 _targetPosition;
     private Vector3 _moveVector;
 
-    void Start()
+    private void Start()
     {
         _playerController = GetComponent<CharacterController>();
 
     }
 
-    void Update()
+    private void Update()
     {
         Inputs();
         Position();
         MoveThePlayer();
+    }
+
+    private void Inputs()
+    {
+        Debug.Log(MobileInputs.Instance.SwipeDelta);
+        bool swipeRight = (MobileInputs.Instance.SwipeRight);
+        bool swipeLeft = (MobileInputs.Instance.SwipeLeft);
+
+        //Gather inputs on which lane we should be on
+        if (swipeRight)
+            MoveLane(true);
+        else if (swipeLeft)
+            MoveLane(false);
     }
 
     private void Position()
@@ -54,17 +67,18 @@ public class PlayerController : MonoBehaviour
         _moveVector.x = (_targetPosition - transform.position).normalized.x * _velocity;
 
         bool isGrounded = IsPlayerGrounded();
-        //anim.SetBool("Grounded", isGrounded); pt/3
+        /*anim.SetBool("Grounded", isGrounded); pt/3*/
 
         //Calculate Y axis
         if (isGrounded)
         {
             _verticalVelocity = -0.1f;
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            bool swipeUp = (MobileInputs.Instance.SwipeUp);
+            if (swipeUp)
             {
                 //Jump
-                //anim.SetTrigger("Jump");
+                /*anim.SetTrigger("Jump");*/
                 _verticalVelocity = _jumpForce;
             }
         }
@@ -74,7 +88,8 @@ public class PlayerController : MonoBehaviour
             _verticalVelocity -= (_gravity * Time.deltaTime);
 
             //Fast falling mechanic
-            if (Input.GetKeyDown(KeyCode.Space))
+            bool swipeDown = (MobileInputs.Instance.SwipeDown);
+            if (swipeDown)
             {
                 _verticalVelocity = -_jumpForce;
             }
@@ -89,18 +104,6 @@ public class PlayerController : MonoBehaviour
         Vector3 dir = _playerController.velocity;
         dir.y = 0;
         transform.forward = Vector3.Lerp(transform.forward, dir, TURN_SPEED);
-    }
-
-    private void Inputs()
-    {
-        bool pressingRightKey = (Input.GetKeyDown(KeyCode.RightArrow));
-        bool pressingLeftKey = (Input.GetKeyDown(KeyCode.LeftArrow));
-
-        //Gather inputs on which lane we should be on
-        if (pressingRightKey)
-            MoveLane(true);
-        else if (pressingLeftKey)
-            MoveLane(false);
     }
 
     private void MoveLane(bool isGoingRight)

@@ -12,7 +12,7 @@ public class CameraController : MonoBehaviour
         transform.position = Player.position + Offset;
     }
 
-    void LateUpdate()
+    private void LateUpdate()
     {
         Vector3 desiredPosition = Player.position + Offset;
         desiredPosition.x = 0;
