@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private const float LANE_DISTANCE = 2.25f;
+    private const float LANE_DISTANCE = 1.5f; //2.25
     private const float TURN_SPEED = 0.1f;
 
     public Animator anim;
@@ -20,8 +20,8 @@ public class PlayerController : MonoBehaviour
 
 
     //Speed Modifier
-    private float _originalSpeed = 7f;
-    private float _speed = 7f;
+    private float _originalSpeed = 4f;
+    private float _speed = 4f;
     private float _speedIncreaseTick;
     private float _speedIncreaseTime = 2.5f;
     private float _speedIncreaseAmount = 0.1f;
@@ -87,10 +87,16 @@ public class PlayerController : MonoBehaviour
         if (_desiredLane == 0)
         {
             _targetPosition += Vector3.left * LANE_DISTANCE;
+            CameraController.Instance.PlayerXOffset = new Vector3(-0.65f, 0, 0);
         }
         else if (_desiredLane == 2)
         {
             _targetPosition += Vector3.right * LANE_DISTANCE;
+            CameraController.Instance.PlayerXOffset = new Vector3(0.65f, 0, 0);
+        }
+        else if (_desiredLane == 1)
+        {
+            CameraController.Instance.PlayerXOffset = new Vector3(0, 0, 0);
         }
     }
 
@@ -198,7 +204,7 @@ public class PlayerController : MonoBehaviour
     {
         _isRunning = true;
         anim.SetTrigger("StartRunning");
-        CameraController.Instance.SnapToPlayerOnStart();
+        //CameraController.Instance.SnapToPlayerOnStart();
     }
 
     private void Crash()
