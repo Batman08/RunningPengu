@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private const int COIN_SCORE_AMOUNT = 1;
+    private const int COIN_SCORE_AMOUNT = 5;
 
     public static GameManager Instance { get; set; }
 
@@ -61,7 +61,9 @@ public class GameManager : MonoBehaviour
 
     public void GetCoin()
     {
-        _coins += COIN_SCORE_AMOUNT;
+        _coins++;
+        CoinText.text = _coins.ToString("0");
+        _score += COIN_SCORE_AMOUNT;
         CoinText.text = _coins.ToString("0");
     }
 
