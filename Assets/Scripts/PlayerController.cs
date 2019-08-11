@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private const float LANE_DISTANCE = 1.5f; //2.25
+    private const float LANE_DISTANCE = 2f; //2.25
     private const float TURN_SPEED = 0.1f;
 
     public Animator anim;

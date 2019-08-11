@@ -25,12 +25,16 @@ public class LevelManager : MonoBehaviour
     public List<Piece> LongBlocks = new List<Piece>();
     public List<Piece> Jumps = new List<Piece>();
     public List<Piece> Slides = new List<Piece>();
+
+    [HideInInspector]
     public List<Piece> Pieces = new List<Piece>(); //All pieces in the pool
 
 
     //List of segments
     public List<Segment> AvailableSegments = new List<Segment>();
     public List<Segment> AvailableTransitions = new List<Segment>();
+
+    [HideInInspector]
     public List<Segment> Segments = new List<Segment>();
 
 
@@ -44,11 +48,6 @@ public class LevelManager : MonoBehaviour
         _cameraContainer = Camera.main.transform;
         _currentSpawnZ = 0;
         __currentLevel = 0;
-    }
-
-    private void Start()
-    {
-
     }
 
     private void SpawnAllSegments()
@@ -79,12 +78,66 @@ public class LevelManager : MonoBehaviour
 
     private void SpawnSegment()
     {
+        List<Segment> possibleSeg = AvailableSegments.FindAll(x => x.BeginY1 == _y1 || x.BeginY2 == _y2 || x.BeginY3 == _y3);
+        int id = Random.Range(0, possibleSeg.Count);
 
+        Segment s = GetSegment(id, false);
+
+        _y1 = s.EndY1;
+        _y2 = s.EndY2;
+        _y3 = s.EndY3;
+
+        s.transform.SetParent(transform);
+        s.transform.localPosition = Vector3.forward * _currentSpawnZ;
+
+        _currentSpawnZ += s.Length;
+        _amountOfActiveSegments++;
+        s.Spawn();
     }
 
     private void SpawnTransition()
     {
+        List<Segment> possibleTransition = AvailableTransitions.FindAll(x => x.BeginY1 == _y1 || x.BeginY2 == _y2 || x.BeginY3 == _y3);
+        int id = Random.Range(0, possibleTransition.Count);
 
+        Segment s = GetSegment(id, true);
+
+        _y1 = s.EndY1;
+        _y2 = s.EndY2;
+        _y3 = s.EndY3;
+
+        s.transform.SetParent(transform);
+        s.transform.localPosition = Vector3.forward * _currentSpawnZ;
+
+        _currentSpawnZ += s.Length;
+        _amountOfActiveSegments++;
+        s.Spawn();
+    }
+
+    public Segment GetSegment(int id, bool transition)
+    {
+        Segment s = null;
+        s = Segments.Find(x => x.SegId == id && x.Transition == transition && !x.gameObject.activeSelf);
+
+        bool noSegmentsAvailable = (s == null);
+        if (noSegmentsAvailable)
+        {
+            GameObject go = Instantiate((transition) ? AvailableTransitions[id].gameObject : AvailableSegments[id].gameObject as GameObject);
+            s.gameObject.GetComponent<Segment>();
+
+            s.SegId = id;
+            s.Transition = transition;
+
+            Segments.Insert(0, s);
+        }
+
+        else
+        {
+            Segments.Remove(s);
+            Segments.Insert(0, s);
+        }
+
+        return s;
     }
 
     public Piece GetPiece(PieceType pt, int VisualIndex)
@@ -111,7 +164,7 @@ public class LevelManager : MonoBehaviour
             go = Instantiate(go);
             p = go.GetComponent<Piece>();
             Pieces.Add(item: p);
-        }//10.19min -pt10 
+        }
         return p;
     }
 }
