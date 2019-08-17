@@ -6,7 +6,7 @@ public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance { set; get; }
 
-    private const bool SHOW_COLLIDER = true;
+    public bool SHOW_COLLIDER = true; //**
 
     //Level Spawning
     private const float DISTANCE_BEFORE_SPAWN = 100f;
@@ -50,11 +50,33 @@ public class LevelManager : MonoBehaviour
         __currentLevel = 0;
     }
 
+    private void Start()
+    {
+        SpawnAllSegments();
+    }
+
+    private void Update()
+    {
+        //Spawn Segment when none left
+        bool noneInfrontOfPlayer = (_currentSpawnZ - _cameraContainer.position.z < DISTANCE_BEFORE_SPAWN);
+        if (noneInfrontOfPlayer)
+        {
+            GenerateSegment();
+        }
+
+        //Despawn Segment
+        bool segmentsBehindCamera = (_amountOfActiveSegments >= MAX_SEGMENTS_ON_SCREEN);
+        if (segmentsBehindCamera)
+        {
+            Segments[_amountOfActiveSegments - 1].Despawn();
+            _amountOfActiveSegments--;
+        }
+    }
+
     private void SpawnAllSegments()
     {
         for (int i = 0; i < INITIAL_SEGMENTS; i++)
         {
-            //Generate Segment
             GenerateSegment();
         }
     }
@@ -65,7 +87,7 @@ public class LevelManager : MonoBehaviour
 
         if (Random.Range(0f, 1f) < (_continiousSegments * 0.25f))
         {
-            //Spawn transition seg
+            //Spawn transition segment
             _continiousSegments = 0;
             SpawnTransition();
         }
@@ -122,8 +144,9 @@ public class LevelManager : MonoBehaviour
         bool noSegmentsAvailable = (s == null);
         if (noSegmentsAvailable)
         {
-            GameObject go = Instantiate((transition) ? AvailableTransitions[id].gameObject : AvailableSegments[id].gameObject as GameObject);
-            s.gameObject.GetComponent<Segment>();
+            GameObject go = Instantiate((transition) ? AvailableTransitions[id].gameObject :
+                            AvailableSegments[id].gameObject) as GameObject;
+            s = go.GetComponent<Segment>();
 
             s.SegId = id;
             s.Transition = transition;

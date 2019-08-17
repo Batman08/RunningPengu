@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     //UI fields
     public TextMeshProUGUI ScoreText, CoinText, ModifierScoreText;
 
+    public bool IsDead { get; set; }
+
     private PlayerController _playerController;
     [HideInInspector]
     public bool _hasGameStarted = false;
@@ -47,9 +49,9 @@ public class GameManager : MonoBehaviour
 
         }
 
-        if (_hasGameStarted)
+        if (_hasGameStarted && !IsDead)
         {
-            //Bumpo up the score
+            //Bump up the score
             _score += (Time.deltaTime * _modifierScore);
             if (_lastScore != (int)_score)
             {
