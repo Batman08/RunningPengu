@@ -14,8 +14,8 @@ public class PieceSpawner : MonoBehaviour
         switch (Type)
         {
             case PieceType.Ramp:
-                break;
                 amtObj = LevelManager.Instance.Ramps.Count;
+                break;
             case PieceType.Longblock:
                 amtObj = LevelManager.Instance.LongBlocks.Count;
                 break;
@@ -24,8 +24,6 @@ public class PieceSpawner : MonoBehaviour
                 break;
             case PieceType.Slide:
                 amtObj = LevelManager.Instance.Slides.Count;
-                break;
-            default:
                 break;
         }
 
