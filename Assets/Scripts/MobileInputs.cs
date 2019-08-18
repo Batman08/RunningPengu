@@ -25,13 +25,13 @@ public class MobileInputs : MonoBehaviour
     {
         Instance = this;
         DontDestroyOnLoad(this);
-        SceneManager.LoadScene("Main_Game");
+        //SceneManager.LoadScene("Main_Game");
     }
 
     private void Update()
     {
         ResetAllSwipes();
-        //MobileControlInputs();
+        //MobileControlInputs(); **
         StandaloneInputs();
         CalculateDistanceOfSwipe();
     }

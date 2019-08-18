@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private const float LANE_DISTANCE = 2f; //2.25
+    private const float LANE_DISTANCE = 2.5f; //2.25
     private const float TURN_SPEED = 0.1f;
 
     public Animator anim;
@@ -14,14 +14,19 @@ public class PlayerController : MonoBehaviour
 
     private bool _isRunning = false;
 
-    private float _jumpForce = 8f;
-    private float _gravity = 16f;
+    private float _jumpForce = 9f;
+    private float _gravity = 22f;
     private float _verticalVelocity;
 
 
     //Speed Modifier
     private float _originalSpeed = 4f;
     private float _speed = 4f;
+
+    private float originalMovingLaneSpeed = 7;
+    public float _movingLaneSpeed;
+
+
     private float _speedIncreaseTick;
     private float _speedIncreaseTime = 2.5f;
     private float _speedIncreaseAmount = 0.1f;
@@ -38,6 +43,7 @@ public class PlayerController : MonoBehaviour
         _playerController = GetComponent<CharacterController>();
         anim = GetComponent<Animator>();
         _speed = _originalSpeed;
+        _movingLaneSpeed = originalMovingLaneSpeed;
     }
 
     public void SetSwipeBools()
@@ -87,16 +93,10 @@ public class PlayerController : MonoBehaviour
         if (_desiredLane == 0)
         {
             _targetPosition += Vector3.left * LANE_DISTANCE;
-            CameraController.Instance.PlayerXOffset = new Vector3(-0.65f, 0, 0);
         }
         else if (_desiredLane == 2)
         {
             _targetPosition += Vector3.right * LANE_DISTANCE;
-            CameraController.Instance.PlayerXOffset = new Vector3(0.65f, 0, 0);
-        }
-        else if (_desiredLane == 1)
-        {
-            CameraController.Instance.PlayerXOffset = new Vector3(0, 0, 0);
         }
     }
 
@@ -104,7 +104,7 @@ public class PlayerController : MonoBehaviour
     {
         //Calculate move delta
         _moveVector = Vector3.zero;
-        _moveVector.x = (_targetPosition - transform.position).normalized.x * _speed;
+        _moveVector.x = (_targetPosition - transform.position).normalized.x * _movingLaneSpeed;
 
         bool isGrounded = IsPlayerGrounded();
         anim.SetBool("Grounded", isGrounded);
@@ -154,7 +154,6 @@ public class PlayerController : MonoBehaviour
 
     private void StartSliding()
     {
-
         float colliderCenterX = _playerController.center.x;
         float colliderCenterY = _playerController.center.y / 2;
         float colliderCenterZ = _playerController.center.z;
@@ -204,7 +203,6 @@ public class PlayerController : MonoBehaviour
     {
         _isRunning = true;
         anim.SetTrigger("StartRunning");
-        //CameraController.Instance.SnapToPlayerOnStart();
     }
 
     private void Crash()

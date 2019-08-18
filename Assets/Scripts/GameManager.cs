@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -36,6 +37,14 @@ public class GameManager : MonoBehaviour
     {
         CheckIfGameHasStarted();
         _playerController.SetSwipeBools();
+
+        if (IsDead)
+        {
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                SceneManager.LoadScene("Main_Game");
+            }
+        }
     }
 
     private void CheckIfGameHasStarted()
