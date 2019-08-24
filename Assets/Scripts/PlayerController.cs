@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     private bool _isRunning = false;
 
     private float _jumpForce = 9f;
-    private float _gravity = 22f;
+    private float _gravity = 28f;
     private float _verticalVelocity;
 
 
