@@ -18,6 +18,8 @@ public class CoinSpawner : MonoBehaviour
         {
             _coins[i] = transform.GetChild(i).gameObject;
         }
+
+        OnDisable();
     }
 
     private void OnEnable()
@@ -29,18 +31,18 @@ public class CoinSpawner : MonoBehaviour
     {
         DisableObjects();
     }
-    //pt13 9:19 / 26:17
+
     private void Spawn()
     {
-        bool shouldNotSpawn = (Random.Range(0f, 1f) < ChanceToSpawn);
+        bool shouldNotSpawn = (Random.Range(0f, 1f) > ChanceToSpawn);
         if (shouldNotSpawn)
             return;
 
         if (ForceSpawnAll)
         {
-            foreach (GameObject go in _coins)
+            for (int i = 0; i < MaxCoin; i++)
             {
-                go.SetActive(value: true);
+                _coins[i].SetActive(value: true);
             }
         }
 
