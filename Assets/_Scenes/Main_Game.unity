@@ -1292,7 +1292,7 @@ MonoBehaviour:
   - {fileID: 4148674383524771262, guid: 1f33010c8df77a34eaab2f905bab2280, type: 3}
   - {fileID: 6201660682093169676, guid: 379a68075c2448042af9c47a036a42df, type: 3}
   Jumps:
-  - {fileID: 75717460262779989, guid: 6cdda9e5b24aa844383ecf3e32faf43e, type: 3}
+  - {fileID: 4627106635439902111, guid: bfa9d2d36e219be459bb7495241c978f, type: 3}
   Slides:
   - {fileID: 75717460262779989, guid: 6cdda9e5b24aa844383ecf3e32faf43e, type: 3}
   Pieces: []
@@ -1300,6 +1300,7 @@ MonoBehaviour:
   - {fileID: 4559699085276543083, guid: 6d88eed9c268cb445b2f9ed008621020, type: 3}
   - {fileID: 8358900538222134169, guid: fd898368ddf96ce4bb4f8f8fb9e5aab5, type: 3}
   - {fileID: 375375351973955454, guid: b76be1967ff0a9d40a97ebbf8b143615, type: 3}
+  - {fileID: 6886318103028037714, guid: 6b7d8b5b6b35d934abaa6c11a47eeb05, type: 3}
   AvailableTransitions:
   - {fileID: 2860658747543055721, guid: b336e108d1d223d429697b9ca78bab9d, type: 3}
   Segments: []
