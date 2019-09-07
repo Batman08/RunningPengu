@@ -23,7 +23,7 @@ public class Segment : MonoBehaviour
             {
                 mr.enabled = LevelManager.Instance.SHOW_COLLIDER;
             }
-        }  //**
+        }  //**15
     }
 
     public void Spawn()

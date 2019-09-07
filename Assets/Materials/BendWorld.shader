@@ -1,4 +1,4 @@
-﻿Shader "Bilal/BendWorld"
+﻿Shader "WorldShader/BendWorld"
 {
 	Properties
 	{
@@ -8,11 +8,13 @@
 		SubShader
 		{
 			Tags { "RenderType" = "Opaque" }
-			LOD 100
+			LOD 200
 
 			CGPROGRAM
+			#pragma surface surf Lambert vertex:vert addshadow
+
 				uniform sampler2D _MainTex;
-				uniform float _Curvature
+				uniform float _Curvature;
 
 				struct Input {
 					float2 uv_MainTex;
@@ -20,17 +22,21 @@
 
 				void vert(inout appdata_full v)
 				{
-					float4 worldSpace = mul(unity_ObjectToWorld, v.vertex)
-					worldSpace.xyz = _WorldSpaceCameraPos.xyz;
-					worldSpace = float4(0f, (worldSpace.z * worldSpace.z) * -_Curvature, 0f, 0f);
+					float4 worldSpace = mul(unity_ObjectToWorld, v.vertex);
+					worldSpace.xyz -= _WorldSpaceCameraPos.xyz;
+					worldSpace = float4(0.0, (worldSpace.z * worldSpace.z) * -_Curvature, 0.0, 0.0);
 
 					v.vertex += mul(unity_WorldToObject, worldSpace);
 				}
 
 				void surf(Input IN, inout SurfaceOutput o)
 				{
-					//prt 14 9:28 / 20:15
+					half4 c = tex2D(_MainTex, IN.uv_MainTex);
+					o.Albedo = c.rgb;
+					o.Alpha = c.a;
 				}
-			EndCG
+
+			ENDCG
 		}
+			FallBack "Mobile/Diffuse"
 }

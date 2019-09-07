@@ -17,7 +17,7 @@ public class CameraController : MonoBehaviour
     private void LateUpdate()
     {
         FollowPlayer();
-    }
+    }// camera roation 13.5
 
     private void FollowPlayer()
     {
