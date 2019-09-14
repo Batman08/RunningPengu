@@ -13,6 +13,9 @@ public class GameManager : MonoBehaviour
 
     //UI fields
     public TextMeshProUGUI ScoreText, CoinText, ModifierScoreText;
+    public TextMeshProUGUI FinalScoreTxt, FinalCoinScoreTxt;
+
+    public Animator DeathMenuAnim;
 
     public bool IsDead { get; set; }
 
@@ -38,13 +41,13 @@ public class GameManager : MonoBehaviour
         CheckIfGameHasStarted();
         _playerController.SetSwipeBools();
 
-        if (IsDead)
-        {
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                SceneManager.LoadScene("Main_Game");
-            }
-        }
+        //if (IsDead)
+        //{
+        //    if (Input.GetKeyDown(KeyCode.R))
+        //    {
+        //        SceneManager.LoadScene("Main_Game");
+        //    }
+        //}
     }
 
     private void CheckIfGameHasStarted()
@@ -82,5 +85,17 @@ public class GameManager : MonoBehaviour
     {
         _modifierScore = 1 + modifierAmount;
         ModifierScoreText.text = "X" + _modifierScore.ToString("0.0");
+    }
+
+    public void OnPlayBtn()
+    {
+        SceneManager.LoadScene("Main_Game");
+    }
+
+    public void OnDeath()
+    {
+        FinalScoreTxt.text = _score.ToString("0");
+        FinalCoinScoreTxt.text = _coins.ToString("0");
+        DeathMenuAnim.SetTrigger("Death");
     }
 }
