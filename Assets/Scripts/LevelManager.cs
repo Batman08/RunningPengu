@@ -103,7 +103,7 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    private void SpawnSegment()
+    private void SpawnSegment() //bend 0.0005 -- old //0.0009
     {
         List<Segment> possibleSeg = AvailableSegments.FindAll(x => x.BeginY1 == _y1 || x.BeginY2 == _y2 || x.BeginY3 == _y3);
         int id = Random.Range(0, possibleSeg.Count);

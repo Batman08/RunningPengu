@@ -18,7 +18,7 @@ public class Coin : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
             GameManager.Instance.GetCoin();
             _anim.SetTrigger("Collected");
