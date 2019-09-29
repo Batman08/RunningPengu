@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     public bool IsDead { get; set; }
 
     private PlayerController _playerController;
+    private GlacierSpawner _glacierSpawner;
     [HideInInspector]
     public bool _hasGameStarted = false;
     private float _score, _coins, _modifierScore;
@@ -30,6 +31,7 @@ public class GameManager : MonoBehaviour
         Instance = this;
         _modifierScore = 1f;
         _playerController = FindObjectOfType<PlayerController>();
+        _glacierSpawner = FindObjectOfType<GlacierSpawner>();
 
         ScoreText.text = _score.ToString();
         CoinText.text = _coins.ToString();
@@ -58,6 +60,7 @@ public class GameManager : MonoBehaviour
         {
             _hasGameStarted = true;
             _playerController.StartRunning();
+            _glacierSpawner.IsScrolling = true;
 
         }
 
@@ -94,6 +97,8 @@ public class GameManager : MonoBehaviour
 
     public void OnDeath()
     {
+        IsDead = true;
+        _glacierSpawner.IsScrolling = false;
         FinalScoreTxt.text = _score.ToString("0");
         FinalCoinScoreTxt.text = _coins.ToString("0");
         DeathMenuAnim.SetTrigger("Death");

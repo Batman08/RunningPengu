@@ -31,7 +31,11 @@ public class GlacierSpawner : MonoBehaviour
         bool noGlaciersInfrontOfPlayer = (transform.GetChild(0).transform.position.z < _playerTransform.position.z - DISTANCE_TO_SPAWN);
         if (noGlaciersInfrontOfPlayer)
         {
-            //16 ----- 9:53 / 15:01
+            transform.GetChild(0).localPosition += Vector3.forward * TotalLength;
+            transform.GetChild(0).SetSiblingIndex(transform.childCount);
+
+            transform.GetChild(0).localPosition += Vector3.forward * TotalLength;
+            transform.GetChild(0).SetSiblingIndex(transform.childCount);
         }
     }
 }
