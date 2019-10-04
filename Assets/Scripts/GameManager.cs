@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; set; }
 
     //UI fields
+    public Animator GameCanvas;   //ep17 13:47 / 20:11
     public TextMeshProUGUI ScoreText, CoinText, ModifierScoreText;
     public TextMeshProUGUI FinalScoreTxt, FinalCoinScoreTxt;
 
@@ -19,6 +20,7 @@ public class GameManager : MonoBehaviour
 
     public bool IsDead { get; set; }
 
+    private CameraController _cameraController;
     private PlayerController _playerController;
     private GlacierSpawner _glacierSpawner;
     [HideInInspector]
@@ -30,8 +32,10 @@ public class GameManager : MonoBehaviour
     {
         Instance = this;
         _modifierScore = 1f;
+
         _playerController = FindObjectOfType<PlayerController>();
         _glacierSpawner = FindObjectOfType<GlacierSpawner>();
+        _cameraController = FindObjectOfType<CameraController>();
 
         ScoreText.text = _score.ToString();
         CoinText.text = _coins.ToString();
@@ -61,6 +65,7 @@ public class GameManager : MonoBehaviour
             _hasGameStarted = true;
             _playerController.StartRunning();
             _glacierSpawner.IsScrolling = true;
+            _cameraController.IsMoving = true;
 
         }
 
