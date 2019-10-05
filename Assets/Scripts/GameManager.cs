@@ -11,12 +11,11 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance { get; set; }
 
-    //UI fields
-    public Animator GameCanvas;   //ep18/19
+    //UI fields    //ep18/19       
     public TextMeshProUGUI ScoreText, CoinText, ModifierScoreText;
-    public TextMeshProUGUI FinalScoreTxt, FinalCoinScoreTxt;
+    public TextMeshProUGUI FinalScoreTxt, FinalCoinScoreTxt, HighScoreText;
 
-    public Animator DeathMenuAnim;
+    public Animator DeathMenuAnim, GameCanvas, MenuAnim, CoinAnim;
 
     public bool IsDead { get; set; }
 
@@ -27,6 +26,7 @@ public class GameManager : MonoBehaviour
     public bool _hasGameStarted = false;
     private float _score, _coins, _modifierScore;
     private int _lastScore;
+    private string _highScoreKey = "HighScore";
 
     private void Awake()
     {
@@ -39,6 +39,8 @@ public class GameManager : MonoBehaviour
 
         ScoreText.text = _score.ToString();
         CoinText.text = _coins.ToString();
+
+        HighScoreText.text = PlayerPrefs.GetInt(_highScoreKey).ToString();
         //   ModifierScoreText.text = "X" + _modifierScore.ToString("0.0");
     }
 
@@ -59,6 +61,7 @@ public class GameManager : MonoBehaviour
             _glacierSpawner.IsScrolling = true;
             _cameraController.IsMoving = true;
             GameCanvas.SetTrigger("Show");
+            MenuAnim.SetTrigger("Hide");
 
         }
 
@@ -76,6 +79,7 @@ public class GameManager : MonoBehaviour
 
     public void GetCoin()
     {
+        CoinAnim.SetTrigger("Collect");
         _coins++;
         CoinText.text = _coins.ToString("0");
         _score += COIN_SCORE_AMOUNT;
@@ -100,5 +104,15 @@ public class GameManager : MonoBehaviour
         FinalScoreTxt.text = _score.ToString("0");
         FinalCoinScoreTxt.text = _coins.ToString("0");
         DeathMenuAnim.SetTrigger("Death");
+        GameCanvas.SetTrigger("Hide");
+        HighScore();
+    }
+
+    private void HighScore()
+    {
+        if (_score > PlayerPrefs.GetInt(_highScoreKey))
+        {
+            PlayerPrefs.SetInt(_highScoreKey, (int)_score);
+        }
     }
 }
