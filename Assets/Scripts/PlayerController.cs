@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private const float LANE_DISTANCE = 2.5f; //2.25
+    private const float LANE_DISTANCE = 3f; //2.25
     private const float TURN_SPEED = 0.1f;
 
     public Animator anim;
@@ -209,7 +209,6 @@ public class PlayerController : MonoBehaviour
     {
         anim.SetTrigger("Death");
         _isRunning = false;
-        GameManager.Instance.IsDead = true;
         GameManager.Instance.OnDeath();
     }
 

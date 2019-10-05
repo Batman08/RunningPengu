@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; set; }
 
     //UI fields
-    public Animator GameCanvas;   //ep17 13:47 / 20:11
+    public Animator GameCanvas;   //ep18/19
     public TextMeshProUGUI ScoreText, CoinText, ModifierScoreText;
     public TextMeshProUGUI FinalScoreTxt, FinalCoinScoreTxt;
 
@@ -39,21 +39,13 @@ public class GameManager : MonoBehaviour
 
         ScoreText.text = _score.ToString();
         CoinText.text = _coins.ToString();
-        ModifierScoreText.text = "X" + _modifierScore.ToString("0.0");
+        //   ModifierScoreText.text = "X" + _modifierScore.ToString("0.0");
     }
 
     private void Update()
     {
         CheckIfGameHasStarted();
         _playerController.SetSwipeBools();
-
-        //if (IsDead)
-        //{
-        //    if (Input.GetKeyDown(KeyCode.R))
-        //    {
-        //        SceneManager.LoadScene("Main_Game");
-        //    }
-        //}
     }
 
     private void CheckIfGameHasStarted()
@@ -66,6 +58,7 @@ public class GameManager : MonoBehaviour
             _playerController.StartRunning();
             _glacierSpawner.IsScrolling = true;
             _cameraController.IsMoving = true;
+            GameCanvas.SetTrigger("Show");
 
         }
 
@@ -92,7 +85,7 @@ public class GameManager : MonoBehaviour
     public void UpdateModifier(float modifierAmount)
     {
         _modifierScore = 1 + modifierAmount;
-        ModifierScoreText.text = "X" + _modifierScore.ToString("0.0");
+        //   ModifierScoreText.text = "X" + _modifierScore.ToString("0.0");
     }
 
     public void OnPlayBtn()
