@@ -86,6 +86,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 0}
+  _movingLaneSpeed: 0
 --- !u!1 &5851290087836354059
 GameObject:
   m_ObjectHideFlags: 0
@@ -134,7 +135,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: fb4e3489ce1e41f4184e4a173f538db9, type: 2}
+  - {fileID: 2100000, guid: 2064d217eccfaa34493138ee298e9cea, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

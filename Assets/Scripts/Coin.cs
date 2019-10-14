@@ -20,9 +20,31 @@ public class Coin : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            GetComponent<BoxCollider>().enabled = false;
             GameManager.Instance.GetCoin();
             _anim.SetTrigger("Collected");
-            //Destroy(transform.parent.gameObject, 2f);  p13 21.25
+            //Destroy(transform.parent.gameObject, 2f);  //p13 21.25
         }
     }
+
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.collider.CompareTag("Player"))
+    //    {
+    //        gameObject.GetComponent<BoxCollider>().isTrigger = true;
+    //        GameManager.Instance.GetCoin();
+    //        _anim.SetTrigger("Collected");
+    //        Debug.LogWarning("Collected the fuckin coin");
+    //    }
+    //}
+
+    //private void OnControllerColliderHit(ControllerColliderHit hit)
+    //{
+    //    if (hit.collider.CompareTag("Player"))
+    //    {
+    //        //GetComponent<BoxCollider>().enabled = false;
+    //        GameManager.Instance.GetCoin();
+    //        _anim.SetTrigger("Collected");
+    //    }
+    //}
 }

@@ -5,19 +5,18 @@ using UnityEngine.SceneManagement;
 
 public class MobileInputs : MonoBehaviour
 {
-    private const float DEAD_ZONE = 100f;
-
-    public static MobileInputs Instance { set; get; }
-
-    private bool _tap, _swipeRight, _swipeLeft, _swipeUp, _swipeDown;
+    private const float DEAD_ZONE = 40f;
+    private const int LeftMouseButton = 0;
+    private bool _isTap, _isSwipeRight, _isSwipeLeft, _isSwipeUp, _isSwipeDown;
     private Vector2 _swipeDelta, _startTouch;
 
+    public static MobileInputs Instance { set; get; }
     public Vector2 SwipeDelta { get { return _swipeDelta; } }
-    public bool Tap { get { return _tap; } }
-    public bool SwipeRight { get { return _swipeRight; } }
-    public bool SwipeLeft { get { return _swipeLeft; } }
-    public bool SwipeUp { get { return _swipeUp; } }
-    public bool SwipeDown { get { return _swipeDown; } }
+    public bool IsTap { get { return _isTap; } }
+    public bool IsSwipeRight { get { return _isSwipeRight; } }
+    public bool IsSwipeLeft { get { return _isSwipeLeft; } }
+    public bool IsSwipeUp { get { return _isSwipeUp; } }
+    public bool IsSwipeDown { get { return _isSwipeDown; } }
 
 
 
@@ -31,28 +30,27 @@ public class MobileInputs : MonoBehaviour
     private void Update()
     {
         ResetAllSwipes();
-        //MobileControlInputs(); **
-        StandaloneInputs();
+        //MobileControlInputs(); //todo: uncomment when using mobile
+        StandaloneInputs(); //todo: uncomment when using desktop
         CalculateDistanceOfSwipe();
     }
 
     private void ResetAllSwipes()
     {
-        _tap = _swipeRight = _swipeLeft = _swipeDown = _swipeUp = false;
+        _isTap = _isSwipeRight = _isSwipeLeft = _isSwipeDown = _isSwipeUp = false;
     }
 
     private void StandaloneInputs()
     {
-        bool mouseButtonDown = (Input.GetMouseButtonDown(0));
-        bool mouseButtonUp = (Input.GetMouseButtonUp(0));
+        bool isMouseButtonDown = Input.GetMouseButtonDown(LeftMouseButton);
+        bool isMouseButtonUp = Input.GetMouseButtonUp(LeftMouseButton);
 
-        if (mouseButtonDown)
+        if (isMouseButtonDown)
         {
-            _tap = true;
+            _isTap = true;
             _startTouch = Input.mousePosition;
         }
-
-        else if (mouseButtonUp)
+        else if (isMouseButtonUp)
         {
             _startTouch = _swipeDelta = Vector2.zero;
         }
@@ -70,7 +68,7 @@ public class MobileInputs : MonoBehaviour
         {
             if (startOfTouch)
             {
-                _tap = true;
+                _isTap = true;
                 _startTouch = Input.mousePosition;
             }
 
@@ -80,7 +78,7 @@ public class MobileInputs : MonoBehaviour
                 _startTouch = _swipeDelta = Vector2.zero;
             }
         }
-    }
+    }//**
 
     private void CalculateDistanceOfSwipe()
     {
@@ -108,9 +106,9 @@ public class MobileInputs : MonoBehaviour
                 //Right or Left
                 bool swipeInLeftDir = (x < 0);
                 if (swipeInLeftDir)
-                    _swipeLeft = true;
+                    _isSwipeLeft = true;
                 else
-                    _swipeRight = true;
+                    _isSwipeRight = true;
             }
 
             else
@@ -118,9 +116,9 @@ public class MobileInputs : MonoBehaviour
                 //Up or Down
                 bool swipeDown = (y < 0);
                 if (swipeDown)
-                    _swipeDown = true;
+                    _isSwipeDown = true;
                 else
-                    _swipeUp = true;
+                    _isSwipeUp = true;
             }
 
             _startTouch = _swipeDelta = Vector2.zero;
@@ -133,7 +131,7 @@ public class MobileInputs : MonoBehaviour
         {
             _swipeDelta = Input.touches[0].position - _startTouch;
         }
-    }
+    }//**
 
     private void CalculateStandaloneSwipe()
     {
@@ -141,5 +139,5 @@ public class MobileInputs : MonoBehaviour
         {
             _swipeDelta = (Vector2)Input.mousePosition - _startTouch;
         }
-    }
+    }//**
 }

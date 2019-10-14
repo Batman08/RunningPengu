@@ -52,10 +52,11 @@ public class GameManager : MonoBehaviour
 
     private void CheckIfGameHasStarted()
     {
-        bool touchedScreen = (MobileInputs.Instance.Tap);
+        bool touchedScreen = (MobileInputs.Instance.IsTap);
         bool gameHasNotStarted = (!_hasGameStarted);
         if (touchedScreen && gameHasNotStarted)
         {
+            Camera.main.fieldOfView = 122.2f;
             _hasGameStarted = true;
             _playerController.StartRunning();
             _glacierSpawner.IsScrolling = true;

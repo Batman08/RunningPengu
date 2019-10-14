@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private const float LANE_DISTANCE = 3f; //2.25
+    private const float LANE_DISTANCE = 2.6f; //2.25
     private const float TURN_SPEED = 0.1f;
 
     public Animator anim;
@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     private float _originalSpeed = 4f;
     private float _speed = 4f;
 
-    private float originalMovingLaneSpeed = 7;
+    private float _originalMovingLaneSpeed = 7;
     public float _movingLaneSpeed;
 
 
@@ -43,15 +43,15 @@ public class PlayerController : MonoBehaviour
         _playerController = GetComponent<CharacterController>();
         anim = GetComponent<Animator>();
         _speed = _originalSpeed;
-        _movingLaneSpeed = originalMovingLaneSpeed;
+        _movingLaneSpeed = _originalMovingLaneSpeed;
     }
 
     public void SetSwipeBools()
     {
-        swipeRight = MobileInputs.Instance.SwipeRight;
-        swipeLeft = MobileInputs.Instance.SwipeLeft;
-        swipeUp = MobileInputs.Instance.SwipeUp;
-        swipeDown = MobileInputs.Instance.SwipeDown;
+        swipeRight = MobileInputs.Instance.IsSwipeRight;
+        swipeLeft = MobileInputs.Instance.IsSwipeLeft;
+        swipeUp = MobileInputs.Instance.IsSwipeUp;
+        swipeDown = MobileInputs.Instance.IsSwipeDown;
     }
 
     private void Update()
