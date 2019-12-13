@@ -20,6 +20,7 @@ public class Coin : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            GameManager.Instance.CoinMultiplier();
             GetComponent<BoxCollider>().enabled = false;
             GameManager.Instance.GetCoin();
             _anim.SetTrigger("Collected");

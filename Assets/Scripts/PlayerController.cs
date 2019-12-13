@@ -73,7 +73,7 @@ public class PlayerController : MonoBehaviour
             _speedIncreaseTick = Time.time;
             _speed += _speedIncreaseAmount;
             GameManager.Instance.UpdateModifier(_speed - _originalSpeed);
-        }
+        }  
     }
 
     private void Inputs()

@@ -11,6 +11,9 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance { get; set; }
 
+    public GameObject CoinMultiplierTxtGO;
+    public TextMeshProUGUI CoinMultiplierTxt;
+
     //UI fields    //ep18/19       
     public TextMeshProUGUI ScoreText, CoinText, ModifierScoreText;
     public TextMeshProUGUI FinalScoreTxt, FinalCoinScoreTxt, HighScoreText;
@@ -41,6 +44,7 @@ public class GameManager : MonoBehaviour
         CoinText.text = _coins.ToString();
 
         HighScoreText.text = PlayerPrefs.GetInt(_highScoreKey).ToString();
+        CoinMultiplierTxtGO.SetActive(value: false);
         //   ModifierScoreText.text = "X" + _modifierScore.ToString("0.0");
     }
 
@@ -77,7 +81,7 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-
+    #region Coin Multiplier Methods
     public void GetCoin()
     {
         CoinAnim.SetTrigger("Collect");
@@ -86,6 +90,20 @@ public class GameManager : MonoBehaviour
         _score += COIN_SCORE_AMOUNT;
         CoinText.text = _coins.ToString("0");
     }
+
+    public void CoinMultiplier()
+    {
+        CoinMultiplierTxt.text = @"+" + COIN_SCORE_AMOUNT.ToString();
+        CoinMultiplierTxtGO.SetActive(value: true);
+
+        Invoke("HideCoinMultiplier", 0.5f);
+    }
+
+    public void HideCoinMultiplier()
+    {
+        CoinMultiplierTxtGO.SetActive(value: false);
+    }
+    #endregion
 
     public void UpdateModifier(float modifierAmount)
     {

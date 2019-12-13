@@ -1,0 +1,3 @@
+1. Quiclky add coin mulitplier text above the collected coind. Also add the blue and white colours to it.
+2. Input - make the controls smoother
+3.Penguin re-center if it hits the an object on the side
